@@ -3,9 +3,6 @@ package cn.jzvd.demo.CustomView;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import cn.jzvd.JZVideoPlayerStandard;
 import cn.jzvd.demo.R;
@@ -31,12 +28,12 @@ public class JZVideoPlayerStandardFresco extends JZVideoPlayerStandard {
     @Override
     public void init(Context context) {
         super.init(context);
-        bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progress);
-        titleTextView = (TextView) findViewById(R.id.title);
-        backButton = (ImageView) findViewById(R.id.back);
-//        thumbImageView = (SimpleDraweeView) findViewById(R.id.thumb);
-        loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
-        tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
+        bottomProgressBar = findViewById(R.id.bottom_progress);
+        titleTextView = findViewById(R.id.title);
+        backButton = findViewById(R.id.back);
+//        thumbImageView = findViewById(R.id.thumb);
+        loadingProgressBar = findViewById(R.id.loading);
+        tinyBackImageView = findViewById(R.id.back_tiny);
 
 //        thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
@@ -53,14 +50,14 @@ public class JZVideoPlayerStandardFresco extends JZVideoPlayerStandard {
             fullscreenButton.setImageResource(R.drawable.jz_shrink);
             backButton.setVisibility(View.VISIBLE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
-        } else if (currentScreen == SCREEN_LAYOUT_LIST) {
+        } else if (currentScreen == SCREEN_WINDOW_LIST) {
             fullscreenButton.setImageResource(R.drawable.jz_enlarge);
             backButton.setVisibility(View.GONE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
         } else if (currentScreen == SCREEN_WINDOW_TINY) {
             tinyBackImageView.setVisibility(View.VISIBLE);
-            setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+            setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,View.INVISIBLE);
         }
     }
 

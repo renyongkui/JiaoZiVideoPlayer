@@ -1,20 +1,29 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "cn.jzvd.demo"
         minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 65
-        versionName "6.0.0"
+        targetSdkVersion 27
+        versionCode 79
+        versionName "6.2.9"
+    }
+    signingConfigs {
+        releaseConfig {
+            storeFile file("jzvd-keystore")
+            storePassword "123456"
+            keyAlias "key0"
+            keyPassword "123456"
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
         }
     }
     lintOptions {
@@ -23,15 +32,16 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile project(':jiaozivideoplayer')
-    compile 'com.squareup.picasso:picasso:2.5.1'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation project(':jiaozivideoplayer')
 
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
+    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
 
-    compile 'com.android.support:recyclerview-v7:25.3.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
+    implementation 'com.danikula:videocache:2.7.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
 }

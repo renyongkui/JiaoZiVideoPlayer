@@ -2,36 +2,33 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.0.0-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.9-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-#### 立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jzvd
-
-目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
-
-[英文文档](https://github.com/lipangit/JiaoZiVideoPlayer)           [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2)
-
 ## 主要特点
 
-1. 视频全屏播放和浮层小窗播放
-2. 可以完全自定义UI
-3. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
-4. 手势修改进度和音量
-5. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
+1. 可以完全自定义UI和任何功能
+2. 一行代码切换播放引擎，支持的视频格式和协议取决于播放引擎，[android.media.MediaPlayer](https://developer.android.com/guide/topics/media/media-formats.html) [ijkplayer](https://github.com/Bilibili/ijkplayer)
+3. 完美检测列表滑动
+4. 可实现全屏播放，小窗播放
+5. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
 6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
-7. 重力感应自动全屏
-8. WebView嵌套本地视频控件
-9. [支持https和rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
-10. 小于 110kb
-11. [Home键暂停，返回继续播放](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/app/src/main/java/cn/jzvd/demo/ApiActivity.java#L117)
+7. 多种视频适配屏幕的方式，可铺满全屏，可以全屏剪裁
+8. 重力感应自动进入全屏
+9. 全屏后手势修改进度和音量
+10. Home键退出界面暂停播放，返回界面继续播放
+11. WebView嵌套本地视频控件
+12. demo中添加视频缓存的例子
 
 ## 效果
 
-**[jiaozivideoplayer-6.0.0.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v6.0.0/jiaozivideoplayer-6.0.0.apk)**
+**[jiaozivideoplayer-6.2.9.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.9/jiaozivideoplayer-6.2.9.apk)**
 
 ![Demo Screenshot][1]
+
+[列表滑动自动进入小窗的效果](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701)
 
 ## 使用
 
@@ -39,10 +36,10 @@
 
 1.添加类库
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.0.0'
+compile 'cn.jzvd:jiaozivideoplayer:6.2.9'
 ```
 
-[或直接下载jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.0.0) 不建议
+或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.9) (不建议)
 
 2.添加布局
 ```xml
@@ -56,7 +53,7 @@ compile 'cn.jzvd:jiaozivideoplayer:6.0.0'
 ```java
 JZVideoPlayerStandard jzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.videoplayer);
 jzVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
-                            , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子闭眼睛");
+                            , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子闭眼睛");
 jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
@@ -86,35 +83,55 @@ protected void onPause() {
 
 ## [Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)
 
-1. 讲解demo中已经有的例子
+* 常规使用
 
-2. 讲解如何根据特定的需求自定义更多的功能和效果
+1. [QuickStart](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/QuickStart)
+2. [列表播放](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%88%97%E8%A1%A8%E6%92%AD%E6%94%BE)
+3. [小窗播放](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%B0%8F%E7%AA%97%E6%92%AD%E6%94%BE)
+4. [直接全屏播放](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E7%9B%B4%E6%8E%A5%E5%85%A8%E5%B1%8F%E6%92%AD%E6%94%BE)
+5. [API](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/API%E7%9A%84%E4%BD%BF%E7%94%A8)
 
-3. [工作分流]() 因为老臣精力有限，需要大家的帮助，把自己的工作做了简单的拆分，希望大家踊跃报名，作为回报，会展示有贡献朋友的github和博客
+* 自定义
 
-* 群管理  --  首先是群内活跃成员，工作内容：管理群成员，整理群文件，宣传微信群等
+1. [自定义代码](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%A0%81)
+2. [自定义代码示例](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B)
+3. [自定义UI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI)
+4. [自定义UI示例](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI%E7%A4%BA%E4%BE%8B)
 
-* 问题解答  --  对库的使用有实践的应用，能解答常见的使用问题，耐心的帮助新手入门。工作内容：每周至少回答两个群里的问题，每周至少解决一个issue
-
-* wiki整理  --  老臣对wiki理解不深，表达能力不强，写作能力一般，我觉得现在的wiki没法看，想用库的人很难从wiki获得有效的帮助，废话太多逻辑复杂，希望和大家讨论
-
-* 发版  --  走发版流程
-
-* 添加功能和bug修复 --  主要的代码工作
-
-* 技术难点调研  --  好多问题老臣不会，希望得到大家的帮助
-
-4. [任务发布]() 因为老臣水平有限，精力有限，思路局限，希望大家能贡献功能、修复bug、技术难点和大家讨论
+[常见问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
 
 
+## [工作分流](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E5%B7%A5%E4%BD%9C%E5%88%86%E6%B5%81) 
 
-## 打赏
+老臣精力能力有限，希望和志同道合的朋友一起把项目做好，感兴趣的同学随时和我报名
+
+* [群管理](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E7%BE%A4%E7%AE%A1%E7%90%86)
+
+1. [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
+2. [Lionet](https://github.com/Lionet6?tab=repositories) QQ:2950527715
+3. [montauk](https://github.com/hanmeimei888) QQ:958489121
+4. [张展硕]() QQ:229431468
+
+* [问题解答](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94)
+
+1. [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
+2. [の伤也快乐](https://github.com/jmhjmh) QQ:466278628
+
+* [wiki整理](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#wiki%E6%95%B4%E7%90%86)
+
+* [发版](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E5%8F%91%E7%89%88)
+
+## [任务发布](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E4%BB%BB%E5%8A%A1%E5%8F%91%E5%B8%83)
+
+## [打赏](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E6%89%93%E8%B5%8F%E5%92%8C%E5%92%A8%E8%AF%A2)
+
+这项目是专门给中小app集成视频播放的，极大降低开发成本，如果给您节省了成吨的时间，建议零售价:打赏500元
 
 ![打赏][2]
 
 ## License MIT
 
-Copyright (c) 2015-2016 李盼 Nathen
+Copyright (c) 2015-2018 李盼 Nathen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -122,5 +139,5 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[1]: https://user-images.githubusercontent.com/2038071/29037042-7e4a1c6e-7bd4-11e7-8e25-5408d138abcd.jpg
+[1]: https://user-images.githubusercontent.com/2038071/31045150-a077cc8a-a5a2-11e7-8dc2-7a0e3a9f3e62.jpg
 [2]: https://user-images.githubusercontent.com/2038071/29978804-45c321ba-8f75-11e7-9040-776d3b6dca1f.jpg

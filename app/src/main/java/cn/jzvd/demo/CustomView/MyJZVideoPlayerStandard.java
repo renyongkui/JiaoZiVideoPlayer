@@ -40,6 +40,11 @@ public class MyJZVideoPlayerStandard extends JZVideoPlayerStandard {
     }
 
     @Override
+    public int getLayoutId() {
+        return cn.jzvd.R.layout.jz_layout_standard;
+    }
+
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         return super.onTouch(v, event);
     }
@@ -47,14 +52,6 @@ public class MyJZVideoPlayerStandard extends JZVideoPlayerStandard {
     @Override
     public void startVideo() {
         super.startVideo();
-    }
-
-    /**
-     * onPrepared
-     */
-    @Override
-    public void onVideoRendingStart() {
-        super.onVideoRendingStart();
     }
 
     @Override
@@ -75,11 +72,6 @@ public class MyJZVideoPlayerStandard extends JZVideoPlayerStandard {
     @Override
     public void onStatePause() {
         super.onStatePause();
-    }
-
-    @Override
-    public void onStatePlaybackBufferingStart() {
-        super.onStatePlaybackBufferingStart();
     }
 
     @Override

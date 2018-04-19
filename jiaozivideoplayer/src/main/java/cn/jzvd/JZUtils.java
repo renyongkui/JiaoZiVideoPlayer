@@ -8,10 +8,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
-import android.text.TextUtils;
+import android.util.Log;
+import android.view.Window;
 
 import java.util.Formatter;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 
@@ -20,15 +20,16 @@ import java.util.Locale;
  * On 2016/02/21 12:25
  */
 public class JZUtils {
+    public static final String TAG = "JiaoZiVideoPlayer";
 
-    public static String stringForTime(int timeMs) {
+    public static String stringForTime(long timeMs) {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
             return "00:00";
         }
-        int totalSeconds = timeMs / 1000;
-        int seconds = totalSeconds % 60;
-        int minutes = (totalSeconds / 60) % 60;
-        int hours = totalSeconds / 3600;
+        long totalSeconds = timeMs / 1000;
+        int seconds = (int) (totalSeconds % 60);
+        int minutes = (int) ((totalSeconds / 60) % 60);
+        int hours = (int) (totalSeconds / 3600);
         StringBuilder stringBuilder = new StringBuilder();
         Formatter mFormatter = new Formatter(stringBuilder, Locale.getDefault());
         if (hours > 0) {
@@ -84,26 +85,46 @@ public class JZUtils {
         return null;
     }
 
+    public static void setRequestedOrientation(Context context, int orientation) {
+        if (JZUtils.getAppCompActivity(context) != null) {
+            JZUtils.getAppCompActivity(context).setRequestedOrientation(
+                    orientation);
+        } else {
+            JZUtils.scanForActivity(context).setRequestedOrientation(
+                    orientation);
+        }
+    }
+
+    public static Window getWindow(Context context) {
+        if (JZUtils.getAppCompActivity(context) != null) {
+            return JZUtils.getAppCompActivity(context).getWindow();
+        } else {
+            return JZUtils.scanForActivity(context).getWindow();
+        }
+    }
+
     public static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
 
-    public static void saveProgress(Context context, String url, int progress) {
+    public static void saveProgress(Context context, Object url, long progress) {
         if (!JZVideoPlayer.SAVE_PROGRESS) return;
+        Log.i(TAG, "saveProgress: " + progress);
+        if (progress < 5000) {
+            progress = 0;
+        }
         SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = spn.edit();
-        editor.putInt(url, progress);
-        editor.apply();
+        editor.putLong("newVersion:" + url.toString(), progress).apply();
     }
 
-    public static int getSavedProgress(Context context, String url) {
+    public static long getSavedProgress(Context context, Object url) {
         if (!JZVideoPlayer.SAVE_PROGRESS) return 0;
-        SharedPreferences spn;
-        spn = context.getSharedPreferences("JZVD_PROGRESS",
+        SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
-        return spn.getInt(url, 0);
+        return spn.getLong("newVersion:" + url.toString(), 0);
     }
 
     /**
@@ -112,30 +133,29 @@ public class JZUtils {
      * @param context context
      * @param url     if url!=null clear this url progress
      */
-    public static void clearSavedProgress(Context context, String url) {
-        if (TextUtils.isEmpty(url)) {
+    public static void clearSavedProgress(Context context, Object url) {
+        if (url == null) {
             SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                     Context.MODE_PRIVATE);
             spn.edit().clear().apply();
         } else {
             SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                     Context.MODE_PRIVATE);
-            spn.edit().putInt(url, 0).apply();
+            spn.edit().putLong("newVersion:" + url.toString(), 0).apply();
         }
     }
 
-    public static String getCurrentUrlFromMap(LinkedHashMap<String, String> map, int index) {
-        if (map.size() == 1) {
-            return getValueFromLinkedMap(map, index);
-        } else {
+    public static Object getCurrentFromDataSource(Object[] dataSourceObjects, int index) {
+        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
+        if (map != null && map.size() > 0) {
             return getValueFromLinkedMap(map, index);
         }
+        return null;
     }
 
-    public static String getValueFromLinkedMap(LinkedHashMap<String, String> map, int index) {
+    public static Object getValueFromLinkedMap(LinkedHashMap<String, Object> map, int index) {
         int currentIndex = 0;
-        for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
-            Object key = it.next();
+        for (String key : map.keySet()) {
             if (currentIndex == index) {
                 return map.get(key);
             }
@@ -144,12 +164,20 @@ public class JZUtils {
         return null;
     }
 
-    public static String getKeyFromLinkedMap(LinkedHashMap<String, String> map, int index) {
+    public static boolean dataSourceObjectsContainsUri(Object[] dataSourceObjects, Object object) {
+        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
+        if (map != null && object != null) {
+            return map.containsValue(object);
+        }
+        return false;
+    }
+
+    public static String getKeyFromDataSource(Object[] dataSourceObjects, int index) {
+        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
         int currentIndex = 0;
-        for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
-            Object key = it.next();
+        for (String key : map.keySet()) {
             if (currentIndex == index) {
-                return key.toString();
+                return key;
             }
             currentIndex++;
         }

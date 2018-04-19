@@ -1,14 +1,14 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 65
-        versionName "6.0.0"
+        targetSdkVersion 27
+        versionCode 79
+        versionName "6.2.9"
     }
     buildTypes {
         release {
@@ -22,9 +22,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    provided 'com.android.support:appcompat-v7:25.3.1'
+    provided 'com.android.support:appcompat-v7:27.1.0'
 }
 
 apply from: '../gradle/maven_push.gradle'
